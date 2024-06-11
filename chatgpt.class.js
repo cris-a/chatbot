@@ -1,7 +1,9 @@
 require('dotenv').config();
 const { CoreClass } = require('@bot-whatsapp/bot');
-const promptPersonalizado = require('./prompt.js');
 const { extractUserInfo } = require('./utils.js');
+const fs = require('fs');
+
+const prompt = fs.readFileSync('prompt.txt', 'utf-8');
 
 class ChatGPTClass extends CoreClass {
   queue = [];
@@ -40,7 +42,7 @@ class ChatGPTClass extends CoreClass {
       this.userInfo[from].email = email;
     }
     // Combina el prompt personalizado con el mensaje del usuario
-    const mensajeCompleto = `${promptPersonalizado} ${body}`;
+    const mensajeCompleto = `${prompt} ${body}`;
 
     const completion = await this.openai.sendMessage(mensajeCompleto, {
       conversationId: !this.queue.length
