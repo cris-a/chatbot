@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { createProvider } = require('@bot-whatsapp/bot');
 
 const QRPortalWeb = require('@bot-whatsapp/portal');
@@ -5,8 +6,7 @@ const BaileysProvider = require('@bot-whatsapp/provider/baileys');
 const MongoAdapter = require('@bot-whatsapp/database/mongo');
 const ChatGPTClass = require('./chatgpt.class');
 
-const MONGO_DB_URI =
-  'mongodb+srv://tikschile:QVgkx1cYgwt0FHD8@cluster0.5ug5xv9.mongodb.net/';
+const MONGO_DB_URI = process.env.MONGODB_URI;
 const MONGO_DB_NAME = 'db_bot';
 const createBotGPT = async ({ provider, database }) => {
   return new ChatGPTClass(database, provider);
